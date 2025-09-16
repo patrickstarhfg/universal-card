@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小黄和小七的万能卡记录</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF85A2', // 柔和粉色，代表小七
+                        secondary: '#85C6FF', // 柔和蓝色，代表小黄
+                        neutral: '#FFF5F8', // 浅粉色背景
+                    },
+                    fontFamily: {
+                        cute: ['"Comic Sans MS"', '"Marker Felt"', 'Arial', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .card-shadow {
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            }
+            .heart-decoration::before {
+                content: '❤';
+                position: absolute;
+                color: #FF85A2;
+                opacity: 0.5;
+                transform: rotate(-15deg);
+            }
+            .count-animation {
+                transition: all 0.3s ease-out;
+            }
+            .count-animation.change {
+                transform: scale(1.3);
+                font-weight: bold;
+            }
+        }
+    </style>
+</head>
+<body class="bg-neutral min-h-screen font-cute p-4 sm:p-6 md:p-8">
+    <div class="max-w-2xl mx-auto">
+        <header class="text-center mb-8 sm:mb-12 relative">
+            <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">
+                万能卡记录
+            </h1>
+            <div class="absolute -top-4 left-1/4 text-primary opacity-70 text-lg">
+                <i class="fa fa-heart"></i>
+            </div>
+            <div class="absolute -top-2 right-1/4 text-secondary opacity-70 text-lg">
+                <i class="fa fa-heart"></i>
+            </div>
+        </header>
+        
+        <section class="bg-white/80 rounded-3xl p-6 mb-8 card-shadow relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 text-primary/10 text-6xl">
+                <i class="fa fa-heart"></i>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-bold mb-4 text-gray-700 flex items-center">
+                <i class="fa fa-info-circle text-primary mr-2"></i>
+                什么是万能卡？
+            </h2>
+            <p class="text-gray-600 text-lg leading-relaxed">
+                万能卡可以用来让对方完成你的小小心愿，无论是帮你做事还是给你惊喜。
+                每次对方满足了你的一个愿望，就可以使用一张万能卡哦！
+            </p>
+        </section>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gradient-to-br from-secondary/20 to-secondary/5 rounded-3xl p-6 card-shadow relative overflow-hidden transition-all duration-300 hover:shadow-lg">
+                <div class="absolute -left-4 -bottom-4 text-secondary/10 text-6xl">
+                    <i class="fa fa-star"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-2 text-secondary flex items-center">
+                    <i class="fa fa-user-circle mr-2"></i>
+                    小黄的万能卡
+                </h3>
+                <div class="flex items-center justify-center my-6">
+                    <button id="decrease-xiaohuang" class="bg-secondary/20 hover:bg-secondary/40 text-secondary w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold transition-all duration-200 active:scale-90">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <div class="mx-6">
+                        <span id="count-xiaohuang" class="text-5xl font-bold text-secondary count-animation">0</span>
+                        <span class="text-gray-500 ml-2">张</span>
+                    </div>
+                    <button id="increase-xiaohuang" class="bg-secondary/20 hover:bg-secondary/40 text-secondary w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold transition-all duration-200 active:scale-90">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl p-6 card-shadow relative overflow-hidden transition-all duration-300 hover:shadow-lg">
+                <div class="absolute -right-4 -bottom-4 text-primary/10 text-6xl">
+                    <i class="fa fa-heart"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-2 text-primary flex items-center">
+                    <i class="fa fa-user-circle mr-2"></i>
+                    小七的万能卡
+                </h3>
+                <div class="flex items-center justify-center my-6">
+                    <button id="decrease-xiaoqi" class="bg-primary/20 hover:bg-primary/40 text-primary w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold transition-all duration-200 active:scale-90">
+                        <i class="fa fa-minus"></i>
+                    </button>
+                    <div class="mx-6">
+                        <span id="count-xiaoqi" class="text-5xl font-bold text-primary count-animation">0</span>
+                        <span class="text-gray-500 ml-2">张</span>
+                    </div>
+                    <button id="increase-xiaoqi" class="bg-primary/20 hover:bg-primary/40 text-primary w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold transition-all duration-200 active:scale-90">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <footer class="text-center text-gray-500 mt-12">
+            <p>用爱记录每一个小确幸 ❤️</p>
+            <div class="flex justify-center space-x-4 mt-4 text-gray-400">
+                <i class="fa fa-heart text-primary animate-pulse"></i>
+                <i class="fa fa-heart text-secondary"></i>
+                <i class="fa fa-heart text-primary"></i>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 你需要将这里的 URL 替换为你自己的 Worker 域名，例如: https://your-worker-name.your-username.workers.dev
+        const WORKER_URL = 'https://PLACEHOLDER.workers.dev';
+        
+        // 获取DOM元素
+        const countXiaoHuang = document.getElementById('count-xiaohuang');
+        const countXiaoQi = document.getElementById('count-xiaoqi');
+        const increaseXiaoHuang = document.getElementById('increase-xiaohuang');
+        const decreaseXiaoHuang = document.getElementById('decrease-xiaohuang');
+        const increaseXiaoQi = document.getElementById('increase-xiaoqi');
+        const decreaseXiaoQi = document.getElementById('decrease-xiaoqi');
+        
+        let xiaohuangCount = 0;
+        let xiaoqiCount = 0;
+
+        // 从云端读取初始数据
+        async function loadFromCloud() {
+            try {
+                const response = await fetch(`${WORKER_URL}/counts`);
+                const data = await response.json();
+                xiaohuangCount = data.xiaohuangCount;
+                xiaoqiCount = data.xiaoqiCount;
+                countXiaoHuang.textContent = xiaohuangCount;
+                countXiaoQi.textContent = xiaoqiCount;
+            } catch (error) {
+                console.error("Failed to load data from cloud:", error);
+            }
+        }
+
+        // 更新计数显示的函数（同时保存到云端）
+        async function updateCount(element, newCount, key) {
+            // 添加动画效果
+            element.classList.add('change');
+            element.textContent = newCount;
+            
+            // 保存到云端
+            try {
+                await fetch(`${WORKER_URL}/update`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ key: key, value: newCount })
+                });
+            } catch (error) {
+                console.error("Failed to save data to cloud:", error);
+            }
+
+            // 移除动画类以允许下次动画
+            setTimeout(() => {
+                element.classList.remove('change');
+            }, 300);
+        }
+        
+        // 事件监听器 - 小黄的卡片
+        increaseXiaoHuang.addEventListener('click', () => {
+            xiaohuangCount++;
+            updateCount(countXiaoHuang, xiaohuangCount, 'xiaohuangCount');
+        });
+        
+        decreaseXiaoHuang.addEventListener('click', () => {
+            if (xiaohuangCount > 0) {
+                xiaohuangCount--;
+                updateCount(countXiaoHuang, xiaohuangCount, 'xiaohuangCount');
+            }
+        });
+        
+        // 事件监听器 - 小七的卡片
+        increaseXiaoQi.addEventListener('click', () => {
+            xiaoqiCount++;
+            updateCount(countXiaoQi, xiaoqiCount, 'xiaoqiCount');
+        });
+        
+        decreaseXiaoQi.addEventListener('click', () => {
+            if (xiaoqiCount > 0) {
+                xiaoqiCount--;
+                updateCount(countXiaoQi, xiaoqiCount, 'xiaoqiCount');
+            }
+        });
+        
+        // 支持键盘操作（左右箭头控制小黄，上下箭头控制小七）
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowRight':
+                    xiaohuangCount++;
+                    updateCount(countXiaoHuang, xiaohuangCount, 'xiaohuangCount');
+                    break;
+                case 'ArrowLeft':
+                    if (xiaohuangCount > 0) {
+                        xiaohuangCount--;
+                        updateCount(countXiaoHuang, xiaohuangCount, 'xiaohuangCount');
+                    }
+                    break;
+                case 'ArrowUp':
+                    xiaoqiCount++;
+                    updateCount(countXiaoQi, xiaoqiCount, 'xiaoqiCount');
+                    break;
+                case 'ArrowDown':
+                    if (xiaoqiCount > 0) {
+                        xiaoqiCount--;
+                        updateCount(countXiaoQi, xiaoqiCount, 'xiaoqiCount');
+                    }
+                    break;
+            }
+        });
+
+        // 页面加载时自动获取数据
+        loadFromCloud();
+    </script>
+</body>
+</html>
